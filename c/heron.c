@@ -10,7 +10,7 @@ float heron(int x, int max_iter, int max_decimals) {
         g = (g + x / g) / 2;
         g = round(g * round_hack) / round_hack;
         printf("iter_no=%i; g=%g\n", i, g);  // %g skips trailing zeros
-        if (g * g == x)
+        if (pow(g, 2) == x)
             return g;
     }
     return g;
