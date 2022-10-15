@@ -19,4 +19,5 @@ float heron(int x, int max_iter, int max_decimals) {
 int main(void) {
     int x = 25, max_iter = 10, max_decimals = 3;
     printf("The square root of %i is %g.\n", x, heron(x, max_iter, max_decimals));
+    return 0;
 }
