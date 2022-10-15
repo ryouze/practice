@@ -30,3 +30,17 @@ Proceed? [y/n]: y
 <- Correct: 003
 The PIN was: 003
 ```
+
+---
+
+## heron
+calculate the square root of a number using the babylonian / heron's algorithm
+
+example:
+```
+// iter_no=1; g=7.042
+// iter_no=2; g=5.296
+// iter_no=3; g=5.008
+// iter_no=4; g=5
+// The square root of 25 is 5.
+```
