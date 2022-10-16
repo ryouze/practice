@@ -18,8 +18,7 @@ int main(void) {
         sprintf(guess, "%0*i", 4, i);  // append leading zeros
         if (strcmp(pin, guess) == 0) {
             printf("<- Correct: %s\n", guess);
-
-            return 0;
+            break;
         }
         printf("-> Wrong: %s\n", guess);
     }
