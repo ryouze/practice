@@ -13,6 +13,19 @@ example:
 こんばんは、rin！今の時間は20:37です。
 ```
 
+
+---
+
+
+## binary
+convert decimal number to binary number.
+
+example:
+```
+こんばんは、rin！今の時間は20:37です。
+```
+
+
 ---
 
 
