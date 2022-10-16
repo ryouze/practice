@@ -3,17 +3,17 @@
 
 int main(void) {
     int decimal_num = 348;
-    int count, quotient, remainder, binary_num[32];
+    int c, result, result_remainder, binary_num[32];
     while (decimal_num != 0) {
-        quotient = decimal_num / 2;
-        remainder = decimal_num % 2;
-        printf("%d / 2 = %d R %d\n", decimal_num, quotient, remainder);
-        binary_num[count] = decimal_num % 2;
-        decimal_num = quotient;
-        count++;
+        result = decimal_num / 2;
+        result_remainder = decimal_num % 2;
+        printf("%d / 2 = %d R %d\n", decimal_num, result, result_remainder);
+        binary_num[c] = decimal_num % 2;
+        decimal_num = result;
+        c++;
     }
     // print in reverse
-    for (int i = count - 1; i >= 0; i--)
+    for (int i = c - 1; i >= 0; i--)
         printf("%d", binary_num[i]);
     putchar('\n');
     return 0;
