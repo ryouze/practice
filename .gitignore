@@ -6,3 +6,6 @@
 
 # libreoffice backup
 .~lock.*
+
+# compiled C binaries
+*.out
