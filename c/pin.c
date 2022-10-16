@@ -3,8 +3,9 @@
 #include <string.h>
 
 int main(void) {
-    char pin[5], guess[5];
-    printf("%s", "Enter a 4-digit PIN to guess: ");
+    char pin[5];
+    char guess[5];
+    fputs("Enter a 4-digit PIN to guess: ", stdout);
     if (scanf("%4s", pin) != 1) {
         puts("Invalid input.");
         return -1;
