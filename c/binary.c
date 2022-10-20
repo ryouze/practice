@@ -4,7 +4,7 @@
 int main(void) {
     int decimal_num = 348;
     int c, result, result_remainder, binary_num[32];
-    while (decimal_num != 0) {
+    while (decimal_num > 0) {
         result = decimal_num / 2;
         result_remainder = decimal_num % 2;
         printf("%d / 2 = %d R %d\n", decimal_num, result, result_remainder);
