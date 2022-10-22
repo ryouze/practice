@@ -8,8 +8,8 @@ int main(void) {
         result = decimal_num / 2;
         result_remainder = decimal_num % 2;
         printf("%d / 2 = %d R %d\n", decimal_num, result, result_remainder);
-        binary_num[c] = result_remainder;
         decimal_num = result;
+        binary_num[c] = result_remainder;
         c++;
     }
     // print in reverse
