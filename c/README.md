@@ -52,6 +52,7 @@ You entered: 0002
 
 ---
 
+
 ## heron
 calculate the square root of a number using the babylonian / heron's algorithm
 
@@ -62,4 +63,23 @@ iter_no=2; g=5.296
 iter_no=3; g=5.008
 iter_no=4; g=5
 The square root of 25 is 5.
+```
+
+
+---
+
+## is_even
+check if a number is even or odd
+
+example:
+```
+1 is odd
+2 is even
+3 is odd
+4 is even
+5 is odd
+6 is even
+7 is odd
+8 is even
+9 is odd
 ```
