@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
     */
     if (argc != 2) {
         printf("Please provide a number. For example to get 348 in binary:\n%s 348\n", argv[0]);
-        return -1;
+        return 1;
     }
     int decimal_num = atoi(argv[1]);  // convert to int
     printf("You have entered: %d\n", decimal_num);

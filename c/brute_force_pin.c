@@ -9,11 +9,11 @@ int main(void) {
     printf("%s", "Enter a 4-digit PIN to guess: ");
     if (scanf("%4s", pin) != 1) {
         puts("Invalid input.");
-        return -1;
+        return 1;
     }
     if (strlen(pin) != 4) {
         puts("Not 4 digits long.");
-        return -1;
+        return 1;
     }
     printf("You entered: %s\n", pin);
     for (int i = 0; i < 10000; i++) {

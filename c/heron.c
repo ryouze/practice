@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
     */
     if (argc != 2) {
         printf("Please provide a number. For example to get the square root of 25:\n%s 25\n", argv[0]);
-        return -1;
+        return 1;
     }
     int x = atoi(argv[1]);  // convert to int
     printf("You have entered: %d\n", x);
