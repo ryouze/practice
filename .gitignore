@@ -9,3 +9,6 @@
 
 # compiled C binaries
 *.out
+
+# compiled nim binaries
+/nim/bin/
