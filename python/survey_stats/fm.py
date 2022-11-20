@@ -46,11 +46,15 @@ def load_columns(fn, encoding="utf-8"):
             # if didn't get two items, use as-is
             else:
                 s_item = item
-                logging.warning(f"column name provided did not split at equal sign into two items: {s_item}; using '{item}' instead")
+                logging.warning(
+                    f"column name provided did not split at equal sign into two items: {s_item}; using '{item}' instead"
+                )
             r.append(s_item)
             # logging.debug(f"column name added: {s_item}")
             continue
-        logging.info(f"ok: loaded '{len(r)}' column names to use as replacement (dropped: {len(f) - len(r)} lines)")
+        logging.info(
+            f"ok: loaded '{len(r)}' column names to use as replacement (dropped: {len(f) - len(r)} lines)"
+        )
     except Exception as e:
         # if failed, quit program
         logging.exception(f"failed to load column file; reason: {e}")
@@ -64,7 +68,9 @@ def load_csv(fn, survey_lang):
     """
     try:
         r = pd.read_csv(fn)
-        logging.info(f"ok: loaded csv file ({survey_lang}): {fn} (columns: {r.shape[1]}, rows: {r.shape[0]})")
+        logging.info(
+            f"ok: loaded csv file ({survey_lang}): {fn} (columns: {r.shape[1]}, rows: {r.shape[0]})"
+        )
     except Exception as e:
         # if failed, quit program
         logging.exception(f"failed to load csv file ({survey_lang}); reason: {e}")

@@ -5,17 +5,28 @@ import logging
 log = logging.getLogger(__name__).addHandler(logging.NullHandler())
 
 
-def lstr(lang_db, name="", category="", language="en", return_available_categories=False, filename="./input/lang_db.json"):
+def lstr(
+    lang_db,
+    name="",
+    category="",
+    language="en",
+    return_available_categories=False,
+    filename="./input/lang_db.json",
+):
     """
     Get localized string in either English or Polish.
     If 'return_available_categories' is True then all internal strings are returned as categorized dictionary.
     Return None if failed.
     """
-    logging.debug(f"requested: {name=}, {category=}, {language=}, {return_available_categories=}")
+    logging.debug(
+        f"requested: {name=}, {category=}, {language=}, {return_available_categories=}"
+    )
     # if asked to return all available strings as a categorized dictionary, return early
     if return_available_categories is True:
-        r = {"column": list(lang_db["english_columns"].keys()),
-             "answer": list(lang_db["english_answers"].keys())}
+        r = {
+            "column": list(lang_db["english_columns"].keys()),
+            "answer": list(lang_db["english_answers"].keys()),
+        }
         return r
     # otherwise, translate
     # return english string from category:
@@ -55,7 +66,7 @@ def translate_pl_to_en(obj, lang_db):
         if name == "rate_competence":
             obj.columns = [col.replace(column_pl, column_en) for col in obj.columns]
             continue
-        column_map.update({column_pl:column_en})
+        column_map.update({column_pl: column_en})
         continue
     # rename polish to english columns
     obj.rename(columns=column_map, inplace=True)
@@ -64,9 +75,11 @@ def translate_pl_to_en(obj, lang_db):
     for name in internal_categories_db["answer"]:
         answer_pl = lstr(lang_db, name, category="answer", language="pl")
         answer_en = lstr(lang_db, name, category="answer", language="en")
-        answer_map.update({answer_pl:answer_en})
+        answer_map.update({answer_pl: answer_en})
         continue
     # rename polish answers to english answers
     obj = obj.replace(answer_map)
-    logging.info(f"ok: translated polish survey to english (rows={obj.shape[0]}, columns={obj.shape[1]})")
+    logging.info(
+        f"ok: translated polish survey to english (rows={obj.shape[0]}, columns={obj.shape[1]})"
+    )
     return obj

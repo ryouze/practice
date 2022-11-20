@@ -1,9 +1,17 @@
-"""Download a list of predatory publishers to a txt file."""
+"""
+Download a list of predatory publishers to a TXT file.
+
+pip3 install -r requirements.txt
+python3 main.py
+"""
 import logging
 
 from bs4 import BeautifulSoup
 from bs4.element import ResultSet
 from requests import HTTPError, Session
+
+# output txt file containg predatory publishers
+FILEPATH: str = r"./publishers.txt"
 
 
 class Web:
@@ -144,15 +152,14 @@ def main() -> None:
     logging.info("downloading a list of predatory publishers")
     publishers: list = Web().publishers  # get predatory publishers from the web
     logging.info(f"ok: downloaded a list of '{len(publishers)}' predatory publishers")
-    filepath: str = r"./publishers.txt"
-    with open(file=filepath, mode="w", encoding="utf-8") as f:
+    with open(file=FILEPATH, mode="w", encoding="utf-8") as f:
         f.write(
             "# A list of predatory publishers downloaded from https://beallslist.net/\n"
         )
         for p in publishers:
             f.write(p + "\n")
             continue
-    logging.info(f"ok: saved list to '{filepath}'")
+    logging.info(f"ok: saved list to '{FILEPATH}'")
     return None
 
 

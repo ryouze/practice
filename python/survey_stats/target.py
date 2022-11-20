@@ -16,11 +16,15 @@ def rename_columns(obj, list_columns, survey_lang):
     new_size = len(list_columns)
     # if length of old columns is not the same as new columns, quit program
     if old_size != new_size:
-        logging.error(f"custom column length '{new_size}' is not the same as the length of ratings columns '{old_size}' in the csv file ({survey_lang})")
+        logging.error(
+            f"custom column length '{new_size}' is not the same as the length of ratings columns '{old_size}' in the csv file ({survey_lang})"
+        )
         quit()
     # otherwise, rename columns
     obj.columns = list_columns
-    logging.info(f"ok: renamed old columns to custom columns (survey: {survey_lang}): {obj.columns[:3]=}")
+    logging.info(
+        f"ok: renamed old columns to custom columns (survey: {survey_lang}): {obj.columns[:3]=}"
+    )
     return obj
 
 
@@ -40,11 +44,15 @@ def get_mean_per_language(obj, colname, colls_db, survey_lang, decimal_points=4)
     # obj_means[f"{survey_lang}_stdev"] = obj_means.std(axis=1).round(decimal_points)
     # obj_means[f"{survey_lang}_min"] = obj.min(axis=1)
     # obj_means[f"{survey_lang}_max"] = obj.max(axis=1)
-    logging.info(f"ok: calculated mean per condition ({survey_lang}): (columns: {obj.shape[1]}, rows: {obj.shape[0]})")
+    logging.info(
+        f"ok: calculated mean per condition ({survey_lang}): (columns: {obj.shape[1]}, rows: {obj.shape[0]})"
+    )
     return obj
 
 
-def add_columns_to_means_df(obj_means, obj_original, colls_to_add, lang_db, survey_lang):
+def add_columns_to_means_df(
+    obj_means, obj_original, colls_to_add, lang_db, survey_lang
+):
     """
     add specific columns from original dataframe (contains all columns) into dataframe (contains means columns only)
     """
@@ -64,17 +72,30 @@ def get_means(obj, colls_db, lang_db, survey_lang):
     return clean dataframe with means per condition and all columns, e.g., when were you born
     """
     # (1) get means only
-    obj_means = get_mean_per_language(obj=obj,
-                                      colname=lang.lstr(lang_db, "rate_competence", category="column"),
-                                      colls_db=colls_db,
-                                      survey_lang=survey_lang)
+    obj_means = get_mean_per_language(
+        obj=obj,
+        colname=lang.lstr(lang_db, "rate_competence", category="column"),
+        colls_db=colls_db,
+        survey_lang=survey_lang,
+    )
     # (2) add specific columns to english means (age, city size, gender, etc)
-    colls_to_add = ["is_l1", "is_l2", "how_often", "age_begin_eng", "birth_year", "what_gender", "how_big_city", "which_uni_year"]
-    obj_means_with_columns = add_columns_to_means_df(obj_means=obj_means,
-                                                     obj_original=obj,
-                                                     colls_to_add=colls_to_add,
-                                                     lang_db=lang_db,
-                                                     survey_lang=survey_lang)
+    colls_to_add = [
+        "is_l1",
+        "is_l2",
+        "how_often",
+        "age_begin_eng",
+        "birth_year",
+        "what_gender",
+        "how_big_city",
+        "which_uni_year",
+    ]
+    obj_means_with_columns = add_columns_to_means_df(
+        obj_means=obj_means,
+        obj_original=obj,
+        colls_to_add=colls_to_add,
+        lang_db=lang_db,
+        survey_lang=survey_lang,
+    )
     return obj_means_with_columns
 
 
@@ -88,21 +109,27 @@ def find_wrong_answers(obj, d_filter_conditions, survey_lang):
     for colname, correct_answer in d_filter_conditions.items():
         # get dataframe containing only specific colname only
         c_obj = obj.filter(like=colname)
-        logging.debug(f"checking column '{colname}' (survey: {survey_lang}) for answers that are not '{correct_answer}'")
+        logging.debug(
+            f"checking column '{colname}' (survey: {survey_lang}) for answers that are not '{correct_answer}'"
+        )
         # find rows that do NOT match correct answer
         match = c_obj[c_obj[colname] != correct_answer]
         # convert dataframe to list
         match = match.index.tolist()
         if match:
             # if found wrong answers, append to list
-            logging.warning(f"answer to '{colname}' (survey: {survey_lang}) is not '{correct_answer}' for following participants '{match}'")
+            logging.warning(
+                f"answer to '{colname}' (survey: {survey_lang}) is not '{correct_answer}' for following participants '{match}'"
+            )
             list_wrong_answers.extend(match)
         continue
     # turn repeating rows into single instances
     list_wrong_answers = list(set(list_wrong_answers))
     # calculate ratio of wrong answers
     ratio = round(((len(list_wrong_answers) / obj.shape[0]) * 100), 2)
-    logging.info(f"ok: checked answers (survey: {survey_lang}) for '{list(d_filter_conditions.keys())}', result: {len(list_wrong_answers)} out of {obj.shape[0]} participants (ratio: {ratio}%)")
+    logging.info(
+        f"ok: checked answers (survey: {survey_lang}) for '{list(d_filter_conditions.keys())}', result: {len(list_wrong_answers)} out of {obj.shape[0]} participants (ratio: {ratio}%)"
+    )
     return list_wrong_answers
 
 
@@ -126,12 +153,16 @@ def find_clickers(obj_means, obj_original, colname, max_clicker_ratio, survey_la
         ratio_percent = round(occurrence[1] / answers_amount * 100)
         # logging.info(f"row {index} (survey: {survey_lang}) has chosen the same answer '{occurrence[0]}' in {ratio_percent}% of answers ({answers_amount} answers vs. {occurrence[1]} occurences); {sorted(row)}; {min(row)=}; {max(row)=}")
         if ratio_percent > max_clicker_ratio:
-            logging.warning(f"participant (survey: {survey_lang}): row '{index}' has same answer '{occurrence[0]}' in {ratio_percent}% of cases (cutoff: >{max_clicker_ratio}%)")
+            logging.warning(
+                f"participant (survey: {survey_lang}): row '{index}' has same answer '{occurrence[0]}' in {ratio_percent}% of cases (cutoff: >{max_clicker_ratio}%)"
+            )
             list_clickers.append(index)
         continue
     # calculate ratio of clickers
     ratio = round(((len(list_clickers) / obj.shape[0]) * 100), 2)
-    logging.info(f"ok: checked clickers (survey: {survey_lang}) at >{max_clicker_ratio}% cutoff, result: {len(list_clickers)} out of {obj.shape[0]} participants (ratio: {ratio}%)")
+    logging.info(
+        f"ok: checked clickers (survey: {survey_lang}) at >{max_clicker_ratio}% cutoff, result: {len(list_clickers)} out of {obj.shape[0]} participants (ratio: {ratio}%)"
+    )
     return list_clickers
 
 
@@ -147,7 +178,9 @@ def drop_rows(obj, target_list, survey_lang):
         r.drop(target_list, axis=0, inplace=True)
         # reset counting
         r.reset_index(drop=True, inplace=True)
-        logging.info(f"ok: dropped {len(target_list)} rows: {obj.shape[0]} -> {r.shape[0]} (survey: {survey_lang})")
+        logging.info(
+            f"ok: dropped {len(target_list)} rows: {obj.shape[0]} -> {r.shape[0]} (survey: {survey_lang})"
+        )
         return r
     logging.info(f"did not drop rows: {obj.shape[0]} (survey: {survey_lang})")
     return obj
@@ -168,12 +201,14 @@ def target_learn(obj, colname):
     max_age = round(float(df_begin.max()), 2)
     # create dictionary that contains mean learn and standard deviation
     r = {
-        "began learning english: mean age":mean_age,
-        "began learning english: min age":min_age,
-        "began learning english: max age":max_age,
-        "began learning english: stdev":stdev
+        "began learning english: mean age": mean_age,
+        "began learning english: min age": min_age,
+        "began learning english: max age": max_age,
+        "began learning english: stdev": stdev,
     }
-    logging.info(f"calculated when began to learn english: {mean_age=}, {min_age=}, {max_age=}, {stdev=}")
+    logging.info(
+        f"calculated when began to learn english: {mean_age=}, {min_age=}, {max_age=}, {stdev=}"
+    )
     return r
 
 
@@ -196,10 +231,10 @@ def target_age(obj, colname, current_year=2022):
     max_age = round((current_year - min_birth), 2)
     # create dictionary that contains mean age and standard deviation
     r = {
-        "age: mean age":mean_age,
-        "age: min age":min_age,
-        "age: max age":max_age,
-        "age: stdev":stdev
+        "age: mean age": mean_age,
+        "age: min age": min_age,
+        "age: max age": max_age,
+        "age: stdev": stdev,
     }
     logging.info(f"calculated age: {mean_age=}, {min_age=}, {max_age=}, {stdev=}")
     return r
@@ -216,7 +251,7 @@ def target_gender(obj, colname):
     # get individual occurences
     gender_dataset = df_gender.value_counts(normalize=True)
     # convert to percentage with 1 decimal
-    gender_dataset = gender_dataset.mul(100).round(1).astype(str) + '%'
+    gender_dataset = gender_dataset.mul(100).round(1).astype(str) + "%"
     # convert to dictionary
     gender_dataset = gender_dataset.to_dict()
     logging.info(f"calculated gender: {gender_dataset=}")
@@ -234,7 +269,7 @@ def target_city(obj, colname):
     # get individual occurences
     city_dataset = df_city.value_counts(normalize=True)
     # convert to percentage with 1 decimal
-    city_dataset = city_dataset.mul(100).round(1).astype(str) + '%'
+    city_dataset = city_dataset.mul(100).round(1).astype(str) + "%"
     # convert to dictionary
     city_dataset = city_dataset.to_dict()
     logging.info(f"calculated city size: {city_dataset=}")
@@ -252,7 +287,7 @@ def target_uni(obj, colname):
     # get individual occurences
     uni_dataset = df_uni.value_counts(normalize=True)
     # convert to percentage with 1 decimal
-    uni_dataset = uni_dataset.mul(100).round(1).astype(str) + '%'
+    uni_dataset = uni_dataset.mul(100).round(1).astype(str) + "%"
     # convert to dictionary
     uni_dataset = uni_dataset.to_dict()
     logging.info(f"calculated uni size: {uni_dataset=}")
