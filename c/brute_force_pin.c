@@ -1,4 +1,6 @@
-// Enter a 4-digit PIN, (e.g., 0021), then brute force it.
+/*
+Enter a 4-digit PIN, (e.g., 0021), then brute force it.
+*/
 #include <stdio.h>
 #include <string.h>
 
