@@ -12,3 +12,6 @@
 
 # compiled nim binaries
 /nim/bin/
+
+# untracked by git, for stuff i don't wanna upload yet
+/untracked/
