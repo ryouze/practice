@@ -7,7 +7,7 @@ Todo: load names from an external txt file instead of storing them as char.
 #include <stdlib.h>
 #include <time.h>
 
-const char *arr_first[] = {
+const char *ARR_FIRST[] = {
     "Ai",
     "Aiko",
     "Aimi",
@@ -128,7 +128,7 @@ const char *arr_first[] = {
     "Yuuko",
 };
 
-const char *arr_second[] = {
+const char *ARR_SECOND[] = {
     "Abe",
     "Adachi",
     "Akiyama",
@@ -332,9 +332,9 @@ const char *arr_second[] = {
 };
 
 int main(int argc, char *argv[]) {
-    size_t arr_first_size = sizeof(arr_first) / sizeof(arr_first[0]);
-    size_t arr_second_size = sizeof(arr_second) / sizeof(arr_second[0]);
-    printf("INFO: available names: %lu; available surnames: %lu\n", arr_first_size, arr_second_size);
+    size_t ARR_FIRST_size = sizeof(ARR_FIRST) / sizeof(ARR_FIRST[0]);
+    size_t ARR_SECOND_size = sizeof(ARR_SECOND) / sizeof(ARR_SECOND[0]);
+    printf("INFO: available names: %lu; available surnames: %lu\n", ARR_FIRST_size, ARR_SECOND_size);
     int amount_to_generate;
     if (argc != 2) {
         amount_to_generate = 10;  // 1 names by default
@@ -343,12 +343,12 @@ int main(int argc, char *argv[]) {
         amount_to_generate = abs(atoi(argv[1]));  // convert to positive int
         printf("OK: amount to generate: %d.\n", amount_to_generate);
     }
-    const char *result1, *result2;
+    const char *RESULT1, *RESULT2;
     srand(time(NULL));
     while (amount_to_generate > 0) {
-        result1 = arr_first[rand() % arr_first_size];
-        result2 = arr_second[rand() % arr_second_size];
-        printf("%s %s\n", result1, result2);
+        RESULT1 = ARR_FIRST[rand() % ARR_FIRST_size];
+        RESULT2 = ARR_SECOND[rand() % ARR_SECOND_size];
+        printf("%s %s\n", RESULT1, RESULT2);
         amount_to_generate--;
     }
     return 0;
