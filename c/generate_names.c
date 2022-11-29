@@ -5,6 +5,7 @@ Todo: load names from an external txt file instead of storing them as char.
 */
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 
 const char *ARR_FIRST[] = {
@@ -331,6 +332,11 @@ const char *ARR_SECOND[] = {
     "Yoshioka",
 };
 
+struct Person {
+    char first[50];
+    char second[50];
+};
+
 int main(int argc, char *argv[]) {
     size_t ARR_FIRST_size = sizeof(ARR_FIRST) / sizeof(ARR_FIRST[0]);
     size_t ARR_SECOND_size = sizeof(ARR_SECOND) / sizeof(ARR_SECOND[0]);
@@ -345,10 +351,11 @@ int main(int argc, char *argv[]) {
     }
     const char *RESULT1, *RESULT2;
     srand(time(NULL));
+    struct Person person;
     while (amount_to_generate > 0) {
-        RESULT1 = ARR_FIRST[rand() % ARR_FIRST_size];
-        RESULT2 = ARR_SECOND[rand() % ARR_SECOND_size];
-        printf("%s %s\n", RESULT1, RESULT2);
+        strcpy(person.first, ARR_FIRST[rand() % ARR_FIRST_size]);
+        strcpy(person.second, ARR_SECOND[rand() % ARR_SECOND_size]);
+        printf("%s %s\n", person.first, person.second);
         amount_to_generate--;
     }
     return 0;
