@@ -1,6 +1,8 @@
 /*
 Print a list of randomly generated romaji female Japanese name pairs (name + surname).
 
+This is a struct test.
+
 Todo: load names from an external txt file instead of storing them as char.
 */
 #include <stdio.h>
@@ -335,7 +337,12 @@ const char *ARR_SECOND[] = {
 struct Person {
     char first[50];
     char second[50];
+    int age;
 };
+
+int get_random_int_in_range(int *max, int *min) {
+    return (rand() % (*max - *min + 1)) + *min;
+}
 
 int main(int argc, char *argv[]) {
     size_t ARR_FIRST_size = sizeof(ARR_FIRST) / sizeof(ARR_FIRST[0]);
@@ -350,13 +357,19 @@ int main(int argc, char *argv[]) {
         printf("OK: amount to generate: %d.\n", amount_to_generate);
     }
     const char *RESULT1, *RESULT2;
+    // generate array
     srand(time(NULL));
-    struct Person person;
-    while (amount_to_generate > 0) {
-        strcpy(person.first, ARR_FIRST[rand() % ARR_FIRST_size]);
-        strcpy(person.second, ARR_SECOND[rand() % ARR_SECOND_size]);
-        printf("%s %s\n", person.first, person.second);
-        amount_to_generate--;
+    struct Person arr_people[amount_to_generate];
+    int max_age = 18;
+    int min_age = 35;
+    for (int i = 0; i < amount_to_generate; i++) {
+        strcpy(arr_people[i].first, ARR_FIRST[rand() % ARR_FIRST_size]);
+        strcpy(arr_people[i].second, ARR_SECOND[rand() % ARR_SECOND_size]);
+        arr_people[i].age = get_random_int_in_range(&min_age, &max_age);
+    }
+    // print array
+    for (int i = 0; i < amount_to_generate; i++) {
+        printf("%d. %s %s (%d)\n", i + 1, arr_people[i].first, arr_people[i].second, arr_people[i].age);
     }
     return 0;
 }
