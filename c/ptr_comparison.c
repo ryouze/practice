@@ -1,22 +1,22 @@
 /*
 Compare memory addresses of two ints and two null pointers.
 */
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 void compare_ptr(int *ptr1, int *ptr2) {
-    // check for null value
+    bool is_different = false;
+    // check for null pointer
     if (ptr1 == NULL && ptr2 == NULL) {
         if (ptr1 == ptr2)
-            puts("same memory address");
-        else
-            puts("different memory address");
-    } else {
-        if (*ptr1 == *ptr2)
-            puts("same memory address");
-        else
-            puts("different memory address");
-    }
+            is_different = true;
+    } else if (*ptr1 == *ptr2)
+        is_different = true;
+    if (is_different)
+        puts("different memory address");
+    else
+        puts("same memory address");
 }
 
 int main(void) {
